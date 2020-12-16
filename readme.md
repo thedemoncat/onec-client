@@ -19,3 +19,9 @@
 ```
     xstart
 ```
+
+5. В файл /opt/1C/v8.3/x86_64/conf/nethasp.ini добавить путь к менеджеру лицензирования, например так:
+
+```
+    echo -e NH_SERVER_ADDR = 1.2.3.4. >> /opt/1C/v8.3/x86_64/conf/nethasp.ini
+```
