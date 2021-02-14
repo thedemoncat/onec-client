@@ -8,11 +8,15 @@ if [ ! -f .env ]; then
     exit 1
 fi
 
-docker build -t demoncat/onec-full:"$ONEC_VERSION" \
+docker build -t demoncat/onec:full-"$ONEC_VERSION" \
     -f onec-full/Dockerfile \
     --build-arg ONEC_USERNAME="$ONEC_USERNAME" \
     --build-arg ONEC_PASSWORD="$ONEC_PASSWORD"  \
     --build-arg VERSION="$ONEC_VERSION" .
 
-docker build -t demoncat/onec-client:"$ONEC_VERSION" \
+docker build -t demoncat/onec:client-"$ONEC_VERSION" \
+    --build-arg VERSION="$ONEC_VERSION" .
+
+docker build -t demoncat/onec:client-"$ONEC_VERSION"-k8s \
+    -f Dockerfile-k8s \
     --build-arg VERSION="$ONEC_VERSION" .
