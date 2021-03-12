@@ -1,0 +1,12 @@
+version: '3'  # requires Docker Compose 1.13 or later
+# This section describes the various containers (services).
+services:
+  onec-client:
+    image: demoncat/onec:client-$ONEC_VERSION
+    environment: 
+      CREATE_DB: "true"
+    ports:
+      - 6080:6080
+    volumes:
+      - "./data:/onec"
+

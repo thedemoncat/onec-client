@@ -1,6 +1,6 @@
-ARG VERSION
+ARG ONEC_VERSION
 
-FROM demoncat/onec-full:${VERSION}
+FROM demoncat/onec:full-${ONEC_VERSION}
 
 # xvfb и xserver используются для разных задач
 # "Правильный" образ не должен содержать и то и другое
@@ -34,10 +34,13 @@ ENV LANG ru_RU.utf8
 COPY xorg.conf /usr/share/X11/xorg.conf.d/10-dummy.conf
 COPY conf.cfg /opt/1C/v8.3/x86_64/conf/
 COPY nethasp.ini /opt/1C/v8.3/x86_64/conf/
-COPY xstart.sh /usr/local/bin/xstart
-COPY novnc.sh /usr/local/bin/novnc
+COPY scripts/ /scripts/
+COPY entrypoint.sh /entrypoint.sh
 
-RUN chmod 4755 /usr/local/bin/xstart \
-    && chmod 4755 /usr/local/bin/novnc
+RUN  chmod 4755 /entrypoint.sh \
+    && chmod 4755 /scripts/* \
+    &&  ln -s /opt/1C/v8.3/x86_64/1cestart /usr/local/bin/1cestart \
+    &&  ln -s /opt/1C/v8.3/x86_64/1cv8 /usr/local/bin/1cv8
 
+ENTRYPOINT [ "/entrypoint.sh" ]
 

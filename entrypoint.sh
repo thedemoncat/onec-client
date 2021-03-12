@@ -1,25 +1,16 @@
 #!/bin/bash
-set -e
+set -xe
 
-TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token) 
-CURL_CA_BUNDLE=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt 
+# startx
+service dbus start &>/dev/null &
+Xorg -dpi 96 -noreset -nolisten tcp +extension GLX +extension RANDR +extension RENDER -logfile /tmp/Xorg.100.log "$DISPLAY" &>/dev/null &
 
-cd /tmp
+# novnc
+x11vnc -q -nopw -forever -bg > /dev/null 2>&1 &
+nohup /opt/noVNC-1.0.0/utils/launch.sh >/dev/null 2>&1 &
 
-if [[ -v KUBE_NAMESPACE ]]; then
-    if [ -f onec-server.json]; then
-        rm onec-server.json
-    fi
-    curl --cacert "$CURL_CA_BUNDLE" \
-    --header "Authorization: Bearer $TOKEN"  \
-    https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT_HTTPS}/api/v1/namespaces/${KUBE_NAMESPACE}/pods?labelSelector=app%3Donec-server >> onec-server.json
-
-    for k in $(jq '.items | keys | .[]'  onec-server.json); do
-        value=$(jq -r ".items[$k]"  onec-server.json);
-        podName=$(jq -r '.metadata.name' <<< "$value");
-        podIP=$(jq -r '.status.podIP' <<< "$value");
-        echo "$podIP $podName" >> /etc/hosts
-    done | column -t -s$'\t'
-
-    rm onec-server.json
+if [ ! -z "$CREATE_DB" ] && [ "$CREATE_DB" == "true" ] ; then
+  ./scripts/load-database-from-files.sh
 fi
+
+sleep infinity
