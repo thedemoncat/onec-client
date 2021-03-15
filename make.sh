@@ -11,18 +11,28 @@ fi
 if [ -z "$HASP_SERVER" ]; then
   HASP_SERVER=localhost
 fi
- 
-cp nethasp.ini nethasp.ini.bak
+
+IMAGE_NAME=${1:-"ghcr.io/thedemoncat/onec-client"}
+
+cp config/nethasp.ini nethasp.ini
 sed -i "s/"%HASP_SERVER%"/$HASP_SERVER/" nethasp.ini
 
-docker build -t demoncat/onec:full-"$ONEC_VERSION" \
-    -f onec-full/Dockerfile \
-    --build-arg ONEC_USERNAME="$ONEC_USERNAME" \
-    --build-arg ONEC_PASSWORD="$ONEC_PASSWORD"  \
-    --build-arg ONEC_VERSION="$ONEC_VERSION" .
+env=()
+while IFS= read -r line || [[ "$line" ]]; do
+  env+=("$line")
+done < ONEC_VERSION
 
-docker build -t demoncat/onec:client-"$ONEC_VERSION" \
-    --build-arg ONEC_VERSION="$ONEC_VERSION" .
+for item in ${env[*]}
+do
+    docker build -t  ghcr.io/thedemoncat/onec/full:"$ONEC_VERSION" \
+        -f onec-full/Dockerfile \
+        --build-arg ONEC_USERNAME="$ONEC_USERNAME" \
+        --build-arg ONEC_PASSWORD="$ONEC_PASSWORD"  \
+        --build-arg ONEC_VERSION="$ONEC_VERSION" .
 
-cp  nethasp.ini.bak nethasp.ini
-rm -f nethasp.ini.bak
+    docker build -t "$IMAGE_NAME":"$ONEC_VERSION" \
+        --build-arg ONEC_VERSION="$ONEC_VERSION" .
+
+done
+
+rm -f nethasp.ini
