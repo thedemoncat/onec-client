@@ -1,6 +1,6 @@
 ARG ONEC_VERSION
 
-FROM ghcr.io/thedemoncat/onec/full:full-${ONEC_VERSION}
+FROM ghcr.io/thedemoncat/onec/full:${ONEC_VERSION}
 
 # xvfb и xserver используются для разных задач
 # "Правильный" образ не должен содержать и то и другое
