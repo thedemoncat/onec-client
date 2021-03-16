@@ -1,5 +1,7 @@
 # Образ клиента 1С:Предприятие
 
+[![CI](https://github.com/TheDemonCat/onec-client/actions/workflows/ci.yaml/badge.svg)](https://github.com/TheDemonCat/onec-client/actions/workflows/ci.yaml)
+
 ## Сборка 
 
 1. Создать файл `.env` в корне проекта. В качестве примера использовать `.env.example`. В файле должны быть определены переменные:

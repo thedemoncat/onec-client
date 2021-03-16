@@ -1,6 +1,6 @@
 ARG ONEC_VERSION
 
-FROM demoncat/onec:full-${ONEC_VERSION}
+FROM ghcr.io/thedemoncat/onec/full:${ONEC_VERSION}
 
 # xvfb и xserver используются для разных задач
 # "Правильный" образ не должен содержать и то и другое
@@ -31,9 +31,9 @@ RUN set -xe \
 ENV DISPLAY :100
 ENV LANG ru_RU.utf8
 
-COPY xorg.conf /usr/share/X11/xorg.conf.d/10-dummy.conf
-COPY conf.cfg /opt/1C/v8.3/x86_64/conf/
-COPY nethasp.ini /opt/1C/v8.3/x86_64/conf/
+COPY config/xorg.conf /usr/share/X11/xorg.conf.d/10-dummy.conf
+COPY config/conf.cfg /opt/1C/v8.3/x86_64/conf/
+COPY config/nethasp.ini /opt/1C/v8.3/x86_64/conf/
 COPY scripts/ /scripts/
 COPY entrypoint.sh /entrypoint.sh
 
