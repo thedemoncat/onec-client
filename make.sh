@@ -24,7 +24,7 @@ done < ONEC_VERSION
 
 for item in ${env[*]}
 do
-    docker build -t  ghcr.io/thedemoncat/onec/full:"$ONEC_VERSION" \
+    docker build -t  ghcr.io/thedemoncat/onec-full:"$ONEC_VERSION" \
         -f onec-full/Dockerfile \
         --build-arg ONEC_USERNAME="$ONEC_USERNAME" \
         --build-arg ONEC_PASSWORD="$ONEC_PASSWORD"  \
