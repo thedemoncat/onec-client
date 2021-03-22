@@ -22,7 +22,7 @@ while IFS= read -r line || [[ "$line" ]]; do
   env+=("$line")
 done < ONEC_VERSION
 
-for item in ${env[*]}
+for ONEC_VERSION in ${env[*]}
 do
     docker build -t  ghcr.io/thedemoncat/onec-full:"$ONEC_VERSION" \
         -f onec-full/Dockerfile \
