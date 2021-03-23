@@ -38,9 +38,7 @@ COPY scripts/ /scripts/
 COPY entrypoint.sh /entrypoint.sh
 
 RUN  chmod 4755 /entrypoint.sh \
-    && chmod 4755 /scripts/* \
-    &&  ln -s /opt/1C/v8.3/x86_64/1cestart /usr/local/bin/1cestart \
-    &&  ln -s /opt/1C/v8.3/x86_64/1cv8 /usr/local/bin/1cv8
+    && chmod 4755 /scripts/* 
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
