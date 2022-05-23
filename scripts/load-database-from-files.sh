@@ -10,7 +10,7 @@ else
   SOURCE_PATH="$SRC_PATH"
 fi
 
-1cv8 CREATEINFOBASE File="$PATH_TMP_BD" /AddInList;
+1cv8 CREATEINFOBASE File="$PATH_TMP_BD" /AddInList  /DisableStartupDialogs /DisableStartupMessages;
 
-1cv8 DESIGNER /F "$PATH_TMP_BD" /LoadConfigFromFiles "$SOURCE_PATH" /UpdateDBCfg;
+1cv8 DESIGNER /F "$PATH_TMP_BD" /LoadConfigFromFiles "$SOURCE_PATH" /UpdateDBCfg  /DisableStartupDialogs /DisableStartupMessages;
 
