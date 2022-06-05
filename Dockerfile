@@ -34,6 +34,7 @@ RUN set -xe; \
     xfce4; \
   rm -rf /var/lib/apt/lists/*
 
+#start_oneget
 RUN set -xe; \
   mkdir /tmp/onec; \
   cd /tmp/onec; \ 
@@ -45,6 +46,7 @@ RUN set -xe; \
   ./setup-full-$ONEC_VERSION-x86_64.run --mode unattended  --enable-components client_thin_fib,server_admin  --installer-language en; \
   cd /tmp; \
   rm -rf /tmp/onec
+#end_oneget
 
 RUN set -xe \
     && wget https://github.com/novnc/noVNC/archive/v1.0.0.tar.gz --no-check-certificate -O novnc.tar.gz \
